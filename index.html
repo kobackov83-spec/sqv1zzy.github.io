@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sqv1zzy.site // cyberpunk interface</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: black;
+    font-family: 'Orbitron', sans-serif;
+    color: cyan;
+    overflow: hidden;
+}
+
+/* ================= BACKGROUND ================= */
+.bg {
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(transparent 95%, rgba(0,255,255,.15) 96%),
+        linear-gradient(90deg, transparent 95%, rgba(255,0,255,.15) 96%);
+    background-size: 40px 40px;
+    animation: grid 10s linear infinite;
+}
+@keyframes grid {
+    to { background-position: 0 40px, 40px 0; }
+}
+
+/* ================= LOADER ================= */
+.loader {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 3px;
+    z-index: 10;
+}
+
+/* ================= GLASS MENU ================= */
+nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 30px;
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    box-shadow: 0 0 20px cyan;
+}
+nav a {
+    margin: 0 12px;
+    color: cyan;
+    text-decoration: none;
+}
+nav a:hover { text-shadow: 0 0 10px cyan; }
+
+/* ================= CARD ================= */
+.card {
+    width: 380px;
+    margin: 120px auto;
+    padding: 35px;
+    text-align: center;
+    background: rgba(255,255,255,.07);
+    backdrop-filter: blur(20px);
+    border-radius: 22px;
+    box-shadow: 0 0 45px rgba(0,255,255,.3);
+}
+
+/* ================= LOGO ================= */
+.logo {
+    font-size: 34px;
+    letter-spacing: 3px;
+    position: relative;
+    margin-bottom: 10px;
+}
+.logo::before,
+.logo::after {
+    content: "SQV1ZZY.SITE";
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+.logo::before {
+    color: magenta;
+    animation: glitch 2s infinite;
+}
+.logo::after {
+    color: cyan;
+    animation: glitch 1.2s infinite reverse;
+}
+
+/* ================= TYPING ================= */
+.typing {
+    font-size: 13px;
+    opacity: .8;
+    border-right: 2px solid cyan;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    margin: 8px auto 20px;
+}
+
+/* ================= AUDIO ================= */
+.audio {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+.bar {
+    width: 6px;
+    height: 10px;
+    margin: 0 3px;
+    background: linear-gradient(cyan, magenta);
+}
+
+/* ================= SOCIAL ================= */
+.socials a {
+    display: inline-block;
+    margin: 8px;
+    padding: 8px 14px;
+    border: 1px solid cyan;
+    border-radius: 20px;
+    color: cyan;
+    text-decoration: none;
+}
+.socials a:hover {
+    background: cyan;
+    color: black;
+    box-shadow: 0 0 20px cyan;
+}
+
+/* ================= FORM ================= */
+input, textarea, button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,.6);
+    border: none;
+    border-radius: 10px;
+    color: cyan;
+}
+button {
+    background: linear-gradient(90deg, cyan, magenta);
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= ANIM ================= */
+@keyframes glitch {
+    0% { clip-path: inset(0 0 80% 0); }
+    50% { clip-path: inset(40% 0 20% 0); }
+    100% { clip-path: inset(80% 0 0 0); }
+}
+
+@media (max-width:420px){
+    .card{ width:90%; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">BOOTING SQV1ZZY.SITE...</div>
+<div class="bg"></div>
+
+<nav>
+    <a href="#">home</a>
+    <a href="#">contact</a>
+    <a href="#">links</a>
+</nav>
+
+<div class="card">
+    <div class="logo">SQV1ZZY.SITE</div>
+    <div class="typing" id="typing"></div>
+
+    <div class="audio" id="bars">
+        <div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <button onclick="toggleMusic()">▶ MUSIC</button>
+
+    <div class="socials">
+        <a href="#">TG</a>
+        <a href="#">GitHub</a>
+        <a href="#">X</a>
+    </div>
+
+    <form>
+        <input placeholder="Name">
+        <input placeholder="Email">
+        <textarea rows="3" placeholder="Message"></textarea>
+        <button>Send signal</button>
+    </form>
+</div>
+
+<audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_47f3b93c7a.mp3">
+</audio>
+
+<script>
+/* LOADER */
+setTimeout(()=>loader.style.display="none",3000);
+
+/* TYPING */
+const text="CYBERPUNK DIGITAL IDENTITY";
+let i=0;
+const t=document.getElementById("typing");
+(function type(){
+    if(i<=text.length){
+        t.textContent=text.slice(0,i++);
+        t.style.width=i+"ch";
+        setTimeout(type,90);
+    }
+})();
+
+/* MUSIC VISUAL */
+const audio=document.getElementById("music");
+const bars=document.querySelectorAll(".bar");
+let ctx,analyser,src;
+
+function toggleMusic(){
+    if(!ctx){
+        ctx=new AudioContext();
+        analyser=ctx.createAnalyser();
+        src=ctx.createMediaElementSource(audio);
+        src.connect(analyser);
+        analyser.connect(ctx.destination);
+    }
+    audio.paused?audio.play():audio.pause();
+    animate();
+}
+function animate(){
+    if(!analyser) return;
+    const data=new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(data);
+    bars.forEach((b,i)=>b.style.height=(data[i]*0.4+10)+"px");
+    requestAnimationFrame(animate);
+}
+</script>
+
+</body>
+</html>
